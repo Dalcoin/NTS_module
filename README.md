@@ -8,6 +8,8 @@ Revised NTS program with modularization and extended capabilities
 * EoS_module
 * Beta_module
 
-Future Additions:
+Dependencies:
 
-AGC: 
+PMOD_26.py (Python 2.6 Module)
+PMOD_27.py (Python 2.7 Module)
+
