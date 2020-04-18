@@ -57,7 +57,8 @@ c calculate the fractions
       call frac_eval(n,rho,e_s)
 
 c fractions output
-      
+      write(32,*) "   den          muons        elec         neu
+     1  pro          frac       e"
       do i=1,n
          add_frac=Y_p(i)+Y_n(i)
          write(32,104) rho(i),Y_u(i),Y_e(i),Y_n(i),
@@ -119,6 +120,8 @@ c output
          der=dcsder(1,rho(i),n2,break1,coeff)
          press(i)=rho(i)*der - eps(i)
          if(nprint .EQ. 1) then
+         write(32,*) "   epa          muons        elec         neu
+     1  pro          frac       e"
             write(33,500) eps(i), press(i), rho(i), e_tot(i)
          end if
       end do
@@ -144,7 +147,7 @@ c output
          end do
       end if      
          
-  104 format(F11.5,2x,F11.5,2x,F11.5,2x,F11.5,2x,F11.5,2x,F11.5,2x,i3)  
+  104 format(e11.5,2x,e11.5,2x,e11.5,2x,e11.5,2x,e11.5,2x,e11.5,2x,i3)  
   500 format(6x,e14.8,4x,e14.8,4x,e14.8,4x,e14.8)
   560 format(6x,e14.8,4x,e14.8,4x,e14.8)
 
