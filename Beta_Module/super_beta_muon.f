@@ -147,9 +147,9 @@ c output
          end do
       end if      
          
-  104 format(e11.5,2x,e11.5,2x,e11.5,2x,e11.5,2x,e11.5,2x,e11.5,2x,i3)  
-  500 format(6x,e14.8,4x,e14.8,4x,e14.8,4x,e14.8)
-  560 format(6x,e14.8,4x,e14.8,4x,e14.8)
+  104 format(F11.5,2x,F11.5,2x,F11.5,2x,F11.5,2x,F11.5,2x,F11.5,2x,i3)  
+  500 format(6x,F14.8,4x,F14.8,4x,F14.8,4x,F14.8)
+  560 format(6x,F14.8,4x,F14.8,4x,F14.8)
 
       end         
 
@@ -468,8 +468,8 @@ cImported from 'tquart.f90'
 
       Function Y(x,tmp1,tmp2)
       implicit real*8(a-h,o-z)
-      common/const/hc,pi,pi2,fmu,fmu2,fmn,fmp,c1,c2   
-      common/fracs/oh,ot,ht,qt,ft,deltm   
+      common/const/hc,pi,pi2,fmu,fmu2,fmn,fmp,c1,c2
+      common/fracs/oh,ot,ht,qt,ft,deltm
       Ye=((((c1*(x*tmp1)**ot)**2+fmu2)**oh)/(c1*tmp1**ot))**3
       Y = -4.d0*tmp2*(1.d0-2.d0*(x+Ye))-deltm+c1*(tmp1*Ye)**(ot)
       return
@@ -477,10 +477,9 @@ cImported from 'tquart.f90'
 
       Function Y2(x,tmp1,tmp2)
       implicit real*8 (a-h,o-z)
-      common/const/hc,pi,pi2,fmu,fmu2,fmn,fmp,c1,c2   
-      common/fracs/oh,ot,ht,qt,ft,deltm   
+      common/const/hc,pi,pi2,fmu,fmu2,fmn,fmp,c1,c2
+      common/fracs/oh,ot,ht,qt,ft,deltm
       diff=fmp-fmn
       Y2 = -4.d0*tmp2*(1.d0-2.d0*x)+diff+c1*(x*tmp1)**(ot)
       return
       end
-          
