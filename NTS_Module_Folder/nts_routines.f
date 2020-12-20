@@ -47,7 +47,7 @@ c          write(000,*) ebc, pbc, rhobc
 c       write(*,*) inac       
        alf = pbc/(rhobc**gam)
        c = (1/rhobc)*(ebc-((alf/(gam-1))*(rhobc**gam)))
-       
+
        if (match .EQ. 1) then
           do i=1,4
              den(i+inac)=rho_i+rho_inc*(i-1.d0)
@@ -69,7 +69,7 @@ c       write(*,*) inac
              eng(i+inac)=avg(den(i+inac),gam,alf,c)
           end do
        end if
-       
+
        if(nprint.EQ.1) then
           do i=1,neos
              write(333,*) eng(i), prs(i), den(i)
@@ -84,18 +84,18 @@ c       write(*,*) inac
 
        return
        end
-                  
+
        function avg(r,gam,alfa,cc)
           implicit real*8(a-h,o-z)
           avg=(alfa/(gam-1.d0))*r**gam+(cc*r) 
           return
        end
-       
+
        function druck(r,gam,alfa)
           implicit real*8(a-h,o-z) 
           druck=(alfa*(r**gam))
           return 
-       end       
+       end
 
        SUBROUTINE runge_kutta_4(x,y,yout,dydx)
           implicit real*8(a-h,o-z) 
@@ -131,31 +131,31 @@ c       write(*,*) inac
           implicit real*8(a-h,o-z) 
           real*8 last_density 
           parameter (neos=97)                
-          dimension y(2), ders(2)                      
-          common/eosval1/outpt1(neos), coeff1(4,neos)                  
-          common/eosval2/outpt2(neos), coeff2(4,neos)                  
-          common/eosval3/outpt3(neos), coeff3(4,neos)                  
-          common/block1/g,fourpi,n2,sm_solar 
+          dimension y(2), ders(2)
+          common/eosval1/outpt1(neos), coeff1(4,neos)
+          common/eosval2/outpt2(neos), coeff2(4,neos)
+          common/eosval3/outpt3(neos), coeff3(4,neos)
+          common/block1/g,fourpi,n2,sm_solar
           common/block2/number_differential_eqs,max_rk4_steps,
-     1                  diff_eq_step 
+     1                  diff_eq_step
           common/block3/first_density,last_density, xkg,density_step
-          common/block4/central_energy_density,const_1,const_2   
-          
-          if(y(1).gt.0.) then 
+          common/block4/central_energy_density,const_1,const_2
+
+          if(y(1).gt.0.) then
              p1=y(1)*central_energy_density
              e_rho=dcsval(p1,n2,outpt1,coeff1)
              e_rho=e_rho/central_energy_density
-c         
+c
              ders(1)=tov(r,e_rho,y)
              ders(2)=(r**2)*e_rho
           end if
-          return                      
-       end 
+          return
+       end
 
        DOUBLE PRECISION FUNCTION tov(r,e_rho,y)
           implicit real*8(a-h,o-z)
-          dimension y(2)   
-          tov=-(e_rho+y(1))*                 
+          dimension y(2)
+          tov=-(e_rho+y(1))*
      1       (y(2) + (r**3)*y(1))/(r*r-2*r*y(2))
-          return            
-       end     
+          return
+       end

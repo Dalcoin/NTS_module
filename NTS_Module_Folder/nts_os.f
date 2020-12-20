@@ -69,27 +69,27 @@ c      Version 2.5.0
        common/block4/central_energy_density,const_1,const_2
        common/eos_total/den_all(neos),prs_all(neos),eng_all(neos)
        common/printing/nprint  
-        
+
        ncd=number_central_densities
-                       
+
        open(626,file='max.srt')
        open(727,file='mas14.srt')
-       open(888,file='caus.srt')    
+       open(888,file='caus.srt')
        open(666,file='outnts.srt')
 
        open(555,file='par.don')
        read(555,'(A)') par_title
        read(555,*) nos, ng1, ng2, g1_int, g1_inc, g2_int, g2_inc, nprint, mprint
-       
+
        g=6.67259D-45*197.327
        pi = 3.14597d0
-       fourpi=12.56637061     
-       n2= neos-1    
-       
+       fourpi=12.56637061
+       n2= neos-1
+
        n=97
-       
+
        if(nos .eq. 1) then
-          call eos_gen              
+          call eos_gen
           do i=1,n
              eng(i)=eng_all(i)
              prs(i)=prs_all(i)
@@ -101,7 +101,7 @@ c      Version 2.5.0
              read(300,*) eng(i), prs(i), den(i)
           end do
        end if
-       
+
 c number of differntial equations             
        number_differential_eqs=2   
 c number of Runge-Kutta iterations 
@@ -123,11 +123,11 @@ c                                                                               
 c             Splunky Spliner Group                                                                |
 c                                                                                                  | 
 c---------------------------------------------------------------------------------------------------
-       
+
        call dcsakm(neos,prs,eng,outpt1,coeff1)
        call dcsakm(neos,den,prs,outpt2,coeff2)
        call dcsakm(neos,den,eng,outpt3,coeff3)
-       
+
 c---------------------------------------------------------------------------------------------------
 c                                                                                                  |
 c             Just Cause Group: Causality Limit                                                    |
@@ -185,30 +185,30 @@ c-------------------------------------------------------------------------------
           y(1)=pressure/central_energy_density
           star_radius=diff_eq_step/10.
           y(2)=((star_radius)**3)/3.
-c    Start Runge-Kutta solution for fixed central density 
+c    Start Runge-Kutta solution for fixed central density
           k=0
           do while((pressure > 0.).and.(k<= max_rk4_steps))
-             k=k+1 
-             star_radius=star_radius+diff_eq_step       
+             k=k+1
+             star_radius=star_radius+diff_eq_step
              call derivatives(star_radius,y,ders)
              call runge_kutta_4(star_radius,y,ynew,ders)
              y(1)=ynew(1)
              y(2)=ynew(2)
              pressure=y(1)*central_energy_density
-          end do 
+          end do
           tp = 10.d0
           cen_dens(i)=ync
           radius(i)=star_radius*const_1
           smass(i)=y(2)*const_2/sm_solar
 
           cnd(i)=cen_dens(i)
-          rad(i)=radius(i)*tp  
+          rad(i)=radius(i)*tp
           smm(i)=smass(i)  
 
           neos1=neos-1
           css(i)= dsqrt(dcsder(1,dcsval(ync,nst2,outpt5,coeff5)
-     1                  ,nst2,outpt4,coeff4))         
-           
+     1                  ,nst2,outpt4,coeff4))
+
 c    Printing subgroup
            
           WRITE(666,500) cen_dens(i), radius(i)*tp, 
